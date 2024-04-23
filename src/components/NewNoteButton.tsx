@@ -1,24 +1,30 @@
 "use client";
-import React from "react";
-import { Dialog, DialogTrigger } from "./ui/dialog";
+
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { Dialog } from "./ui/dialog";
 import { Plus } from "lucide-react";
 import NewNoteDialog from "./NewNoteDialog";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
-const NewNoteButton = ({ className }: { className?: String }) => {
+function NewNoteButton({ className }: { className?: string }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogTrigger
         className={cn(
           "text-secondary transition-colors duration-200 ease-in-out hover:text-primary",
           className,
         )}
+        onClick={() => setOpen(true)}
       >
-        <Plus />
+        <Plus className="size-10 sm:size-12" />
       </DialogTrigger>
-      <NewNoteDialog />
+
+      <NewNoteDialog setOpen={setOpen} />
     </Dialog>
   );
-};
+}
 
 export default NewNoteButton;
