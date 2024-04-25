@@ -13,6 +13,7 @@ import {
 } from "./ui/alert-dialog";
 import { useState, useTransition } from "react";
 import toast from "react-hot-toast";
+import { deleteNoteAction } from "@/actions/notes";
 
 const DeleteButton = ({ noteId }: { noteId: number }) => {
   const [open, setOpen] = useState(false);
@@ -36,7 +37,7 @@ const DeleteButton = ({ noteId }: { noteId: number }) => {
         className="absolute -right-2"
         onClick={() => setOpen(true)}
       >
-        <Trash2 className="size-5 size-5 text-destructive/50" />
+        <Trash2 className="size-5  text-destructive/50" />
       </AlertDialogTrigger>
 
       <AlertDialogContent>
@@ -52,7 +53,11 @@ const DeleteButton = ({ noteId }: { noteId: number }) => {
             cancel
           </AlertDialogCancel>
           <form action={handleDeleteNote}>
-            <AlertDialogAction type="submit">
+            <AlertDialogAction
+              type="submit"
+              className="bg-destructive hover:bg-destructive hover:brightness-100"
+              disabled={isPending}
+            >
               {isPending ? "Deleting Note...." : "Delete Note"}
             </AlertDialogAction>
           </form>
