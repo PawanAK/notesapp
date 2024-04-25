@@ -1,6 +1,8 @@
 "use client";
 
 import { Note as NoteType } from "@/db/schemas/notes";
+import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";
 
 type Props = {
   note: NoteType;
@@ -13,6 +15,8 @@ function Note({ note }: Props) {
         <h2 className="text-lg font-semibold text-muted-foreground">
           {note.updatedAt.toISOString().slice(0, 10)}
         </h2>
+        <EditButton />
+        <DeleteButton noteId={note.id} />
       </div>
 
       <p>{note.text}</p>
