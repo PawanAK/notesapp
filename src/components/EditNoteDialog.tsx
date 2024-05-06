@@ -2,7 +2,7 @@
 
 import { editNoteAction } from "@/actions/notes";
 import { Note } from "@/db/schemas/notes";
-import { useTransition, type Dispatch, type SetStateAction } from "react";
+import { Dispatch, SetStateAction, useTransition } from "react";
 import toast from "react-hot-toast";
 import {
   DialogContent,
@@ -10,16 +10,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
-import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
+import { Button } from "./ui/button";
 
 type Props = {
   setOpen: Dispatch<SetStateAction<boolean>>;
   note: Note;
 };
 
-const EditNoteDialog = ({ setOpen, note }: Props) => {
+function EditNoteDialog({ setOpen, note }: Props) {
   const [isPending, startTransition] = useTransition();
+
   const handleEditNote = async (formData: FormData) => {
     startTransition(async () => {
       const { errorMessage } = await editNoteAction(formData);
@@ -31,17 +32,21 @@ const EditNoteDialog = ({ setOpen, note }: Props) => {
       }
     });
   };
+
   return (
     <DialogContent className="sm:max-w-[425px]">
-      <DialogHeader>edit Note</DialogHeader>
+      <DialogHeader>Edit Note</DialogHeader>
 
       <form action={handleEditNote}>
         <Textarea
           id="text"
           name="text"
           disabled={isPending}
+          defaultValue={note.text}
           className="mb-6 mt-2 min-h-[300px]"
         />
+
+        <input type="text" hidden name="noteId" value={note.id} />
 
         <DialogFooter>
           <Button
@@ -56,6 +61,6 @@ const EditNoteDialog = ({ setOpen, note }: Props) => {
       </form>
     </DialogContent>
   );
-};
+}
 
 export default EditNoteDialog;
