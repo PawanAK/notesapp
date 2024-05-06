@@ -15,7 +15,7 @@ function Note({ note }: Props) {
         <h2 className="text-lg font-semibold text-muted-foreground">
           {note.updatedAt.toISOString().slice(0, 10)}
         </h2>
-        <EditButton />
+        <EditButton note={note} />
         <DeleteButton noteId={note.id} />
       </div>
 
